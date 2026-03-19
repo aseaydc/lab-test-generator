@@ -542,6 +542,7 @@
                 <button class="lab-btn" data-lab="diagnostic">Diagnostic Solutions</button>
                 <button class="lab-btn" data-lab="doctorsdata">Doctor's Data</button>
                 <button class="lab-btn" data-lab="labcorp">LabCorp</button>
+                <button class="lab-btn" data-lab="mosaic">Mosaic Diagnostics</button>
             </div>
 
             <div id="testCategories"></div>
@@ -863,6 +864,18 @@
                 "Comprehensive Panels": [
                     { name: "Comprehensive Blood Chemistry", price: 318, specimen: "Blood", details: "Complete metabolic panel, lipids, thyroid, CBC with differential" }
                 ]
+            },
+            "Mosaic Diagnostics": {
+                "Metabolic & Nutritional": [
+                    { name: "Organic Acids Test (OAT)", price: 448, specimen: "Urine", details: "Comprehensive organic acid metabolite analysis" }
+                ],
+                "Toxins & Detoxification": [
+                    { name: "MycoTOX Profile™", price: 440, specimen: "Urine", details: "Mycotoxin exposure assessment" },
+                    { name: "TOXDetect Profile®", price: 462, specimen: "Urine", details: "Environmental toxin detection profile" }
+                ],
+                "Specialty Testing": [
+                    { name: "KPU", price: 340, specimen: "Urine", details: "Kryptopyrrole (mauve factor) - pyrrole disorder marker" }
+                ]
             }
         };
 
@@ -875,7 +888,8 @@
             'genova': 'Genova Diagnostics',
             'diagnostic': 'Diagnostic Solutions Lab',
             'doctorsdata': "Doctor's Data",
-            'labcorp': 'LabCorp'
+            'labcorp': 'LabCorp',
+            'mosaic': 'Mosaic Diagnostics'
         };
 
         function initializeCategories() {
