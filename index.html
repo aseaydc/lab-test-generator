@@ -520,6 +520,60 @@
             font-weight: 600;
             color: #667eea;
         }
+
+        /* Custom Test Entry */
+        .custom-test-section {
+            background: #f0f4ff;
+            border: 2px dashed #2a5298;
+            border-radius: 10px;
+            padding: 20px 25px;
+            margin: 20px 0;
+        }
+        .custom-test-section h3 {
+            color: #1e3c72;
+            margin: 0 0 15px 0;
+            font-size: 1em;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .custom-test-inputs {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: flex-end;
+        }
+        .custom-test-inputs input {
+            border: 1.5px solid #b0bcd8;
+            border-radius: 6px;
+            padding: 9px 12px;
+            font-size: 0.92em;
+            background: #fff;
+            color: #1e3c72;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .custom-test-inputs input:focus {
+            border-color: #2a5298;
+        }
+        .custom-test-inputs input.input-name { flex: 2; min-width: 180px; }
+        .custom-test-inputs input.input-lab  { flex: 1.2; min-width: 130px; }
+        .custom-test-inputs input.input-price { flex: 0.8; min-width: 100px; }
+        .custom-add-btn {
+            background: linear-gradient(135deg, #2a5298, #1e3c72);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 9px 20px;
+            font-size: 0.92em;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: opacity 0.2s;
+        }
+        .custom-add-btn:hover { opacity: 0.88; }
+        .custom-error { color: #c0392b; font-size: 0.83em; margin-top: 6px; display: none; }
     </style>
 </head>
 <body>
@@ -546,6 +600,19 @@
             </div>
 
             <div id="testCategories"></div>
+
+            <!-- Custom Test Entry -->
+            <div class="custom-test-section">
+                <h3>&#43; Add a Custom Test</h3>
+                <div class="custom-test-inputs">
+                    <input type="text" id="customTestName"  class="input-name"  placeholder="Test name (e.g. Zinc, Copper, Ceruloplasmin)" />
+                    <input type="text" id="customTestLab"   class="input-lab"   placeholder="Lab (e.g. LabCorp)" />
+                    <input type="number" id="customTestPrice" class="input-price" placeholder="Price ($)" min="0" step="0.01" />
+                    <button class="custom-add-btn" onclick="addCustomTest()">Add Test</button>
+                </div>
+                <div class="custom-error" id="customError">Please enter a test name and price.</div>
+            </div>
+
 
             <div class="patient-info-section" id="patientInfoSection">
                 <h2 style="color: #2a5298; margin-bottom: 20px;">Patient Information</h2>
@@ -1091,6 +1158,39 @@
         
         // Set today's date as default
         document.getElementById('patientDate').valueAsDate = new Date();
+
+        function addCustomTest() {
+            const nameEl  = document.getElementById('customTestName');
+            const labEl   = document.getElementById('customTestLab');
+            const priceEl = document.getElementById('customTestPrice');
+            const errEl   = document.getElementById('customError');
+
+            const name  = nameEl.value.trim();
+            const lab   = labEl.value.trim() || 'Custom';
+            const price = parseFloat(priceEl.value);
+
+            if (!name || isNaN(price) || price < 0) {
+                errEl.style.display = 'block';
+                return;
+            }
+            errEl.style.display = 'none';
+
+            selectedTests.push({ name, lab, price, specimen: '—', details: 'Custom entry', custom: true });
+            updateSelectedTests();
+
+            nameEl.value  = '';
+            labEl.value   = '';
+            priceEl.value = '';
+            nameEl.focus();
+        }
+
+        // Allow Enter key on custom price field to trigger add
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('customTestPrice').addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') addCustomTest();
+            });
+        });
+
     </script>
 </body>
 </html>
